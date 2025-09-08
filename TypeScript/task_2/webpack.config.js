@@ -4,8 +4,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
+  mode: "development",
   entry: "./js/main.ts",
+  
   devtool: "inline-source-map",
+  
   module: {
     rules: [
       {
@@ -17,12 +20,19 @@ module.exports = {
       }
     ]
   },
+  
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
   },
+  
   devServer: {
-    contentBase: "./dist"
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    open: true,
+    port: 8080,
   },
+  
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
     new CleanWebpackPlugin(),
@@ -30,6 +40,7 @@ module.exports = {
       title: "Development"
     })
   ],
+  
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
